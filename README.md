@@ -1,8 +1,9 @@
 # ECE160-Final
 Uno
 
-Run with:
+Compilation steps:
 make
+./play.out
 
-Clean with:
+Clean:
 make clean

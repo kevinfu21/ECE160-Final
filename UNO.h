@@ -11,7 +11,7 @@ void test2(void);
 void prompt(void); //initial setup prompts
 void draw_board(); //draw the UI
 /*
-this'll one will be a pretty big one
+this'll one will be a pretty big one (draw_board)
 INCLUDE SPACE FOR:
 
 For EVERYONE to see:
@@ -21,9 +21,8 @@ For EVERYONE to see:
 - Number of cards each player has
 
 - At the bottom, each person's "Menu," theoretically "PRIVATE" for each player, with:
-    - Player's cards
-
-
+    - Player's card
+take in the proper inputs to be able to display this
 */
 
 
