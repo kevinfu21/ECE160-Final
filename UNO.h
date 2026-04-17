@@ -10,6 +10,23 @@ void test2(void);
 //FUNCTIONS 1 - 
 void prompt(void); //initial setup prompts
 void draw_board(); //draw the UI
+/*
+this'll one will be a pretty big one
+INCLUDE SPACE FOR:
+
+For EVERYONE to see:
+- Current card
+- The cards before the current one, if time allows
+- Turn number
+- Number of cards each player has
+
+- At the bottom, each person's "Menu," theoretically "PRIVATE" for each player, with:
+    - Player's cards
+
+
+*/
+
+
 void deal_cards(); //initial dealing
 void draw_cards(); //draw card placed
 int validate_turn(); //make sure u play right moves
@@ -22,7 +39,8 @@ void reverse(); //reverse card
 
 
 
-//All cards
+//Structs
+//All cards, was thinking each player could just be an array of these?
 struct Card {
     int ID; //for internal use, use RNG for distribution
     char *name; //offical name
