@@ -8,7 +8,7 @@ void test1() {
 void prompt(int *players, int *computers){
     int choice = 0;
     printf("(1) Start Game\n");
-    printf("(2) Game Setting\n");
+    printf("(2) Gamemodes\n");
     printf("(3) Player Setting\n");
     //scanf();
 /*
