@@ -1,31 +1,51 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include "UNO.h"
 
 int main(){
-    int players;
-    int computers;
-    int order; //reverse or not
+    int numPlayers;
+    int order = 1; //reverse or not
     char color;
     char *current_card;
-    int current_turn;
-    int winner; //while winner == 0, keep game going in the while loop below. 
+    int currentTurn = 0;
+    int winner = 0; //while winner == 0, keep game going in the while loop below. 
+    int drawUntilMatch = 0;
+    int sevenZero = 0;
+    int deckTop = 0;
+    Card deck[DECK_SIZE];
 
-    //SETUP STUFF
-    /*
-    printf("Hello! This is UNO : ).\n");
-    prompt(&players, &computers);
+    //creates a shuffled deck
+    srand(time(NULL));
+    createDeck(deck);
+    shuffleDeck(deck);
+    printDeck(deck);
 
-    printf("Players: %d\n", players);
-    printf("Computers: %d\n", computers);
-    */
+    //prompt user for gamemode and create a pointer of players array
+    prompt(&drawUntilMatch, &sevenZero);
+    //For organization, create a numPlayers() function???
+    printf("Enter number of players: ");
+    scanf("%d", &numPlayers);
+    Player *players = malloc(numPlayers * sizeof(Player));
+    initalizePlayers(players, numPlayers);
+
+    drawDeck(players, numPlayers, deck, deckTop);
+    
+    //ACTUAL GAME
+    while (winner == 0) {
+        if (currentTurn == 0) {
+            userTurn(&players[currentTurn]);
+            winner = checkWin(players[currentTurn]);
+        } else {
+            computerTurn(&players[currentTurn]);
+            winner = checkWin(players[currentTurn]);
+        }
+
+        currentTurn = (currentTurn + order + numPlayers) % numPlayers;
+    }
 
     test1();
     test2();
-
-    //ACTUAL GAME
-    while (winner == 0) {
-        //GAME STUFF GOES HERE
-    }
 
 
 

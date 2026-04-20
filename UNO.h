@@ -1,5 +1,29 @@
 #include <stdio.h>
 
+#define DECK_SIZE 108
+#define MAX_PLAYERS 4
+#define STARTING_HAND 7
+
+#define SKIP 10
+#define REVERSE 11
+#define DRAW2 12
+#define WILD_CARD 13
+#define WILD4 14
+
+typedef enum {RED, GREEN, BLUE, YELLOW, WILD} Color;
+
+//Structs
+
+typedef struct {
+    int ID;
+    Color color;
+} Card;
+
+typedef struct {
+    Card hand[100];
+    int handSize;
+} Player;
+
 //put all functions prototypes here
 //FUNCTIONS 1 & 2 just to split the workload and make sure no merge crap happens
 void test1(void);
@@ -8,8 +32,6 @@ void test2(void);
 
 
 //FUNCTIONS 1 - 
-void prompt(void); //initial setup prompts
-void draw_board(); //draw the UI
 /*
 this'll one will be a pretty big one (draw_board)
 INCLUDE SPACE FOR:
@@ -25,6 +47,11 @@ For EVERYONE to see:
 take in the proper inputs to be able to display this
 */
 
+void prompt(int *players);
+void gamemodes(int *drawUntilMatch, int *sz);
+void initalizePlayers(Player *player, int numPlayer);
+void userTurn(Player *player);
+
 
 void deal_cards(); //initial dealing
 void draw_cards(); //draw card placed
@@ -37,19 +64,15 @@ void reverse(); //reverse card
 
 
 
-
-//Structs
-//All cards, was thinking each player could just be an array of these?
-struct Card {
-    int ID; //for internal use, use RNG for distribution
-    char *name; //offical name
-    char color; //r,g,b,y
-    char type; //Regular(r), special(s)
-};
+//CARDS.C 
+void createDeck(Card deck[]);
+void shuffleDeck(Card deck[]);
+void printDeck(Card deck[]);
+void printHand(Card hand[], int size);
+void dealDeckStart(Player player[], int numPlayer, Card deck[], int *deckTop);
 
 
-//4 colors: 0-9, draw 2, skip, reverse. 
-struct Card cards[] = {
-    {1, "Red 1", 'r', 'r'},
-    //.....
-};
+/* setup / deck */
+void createDeck(Card deck[]);
+void shuffleDeck(Card deck[]);
+void printDeck(Card deck[]);   
