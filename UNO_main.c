@@ -29,7 +29,7 @@ int main(){
     Player *players = malloc(numPlayers * sizeof(Player));
     initalizePlayers(players, numPlayers);
 
-    drawDeck(players, numPlayers, deck, deckTop);
+    drawDeck(players, numPlayers, deck, &deckTop);
     
     //ACTUAL GAME
     while (winner == 0) {
@@ -49,6 +49,6 @@ int main(){
 
 
 
-
+    free(players);
     return 0;
 }

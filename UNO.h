@@ -47,7 +47,7 @@ For EVERYONE to see:
 take in the proper inputs to be able to display this
 */
 
-void prompt(int *players);
+void prompt(int *drawUntilMatch, int *sz);
 void gamemodes(int *drawUntilMatch, int *sz);
 void initalizePlayers(Player *player, int numPlayer);
 void userTurn(Player *player);
