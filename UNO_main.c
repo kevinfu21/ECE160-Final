@@ -14,7 +14,7 @@ int main(){
     int sevenZero = 0;
     int deckTop = 0;
     Card deck[DECK_SIZE];
-    Card topCard; //Card that was last placed
+    Card topCard = {-1, WILD}; //Card that was last placed
 
     //creates a shuffled deck
     srand(time(NULL));
@@ -28,19 +28,20 @@ int main(){
     printf("Enter number of players: ");
     scanf("%d", &numPlayers);
     Player *players = malloc(numPlayers * sizeof(Player));
-    initalizePlayers(players, numPlayers);
+    initializePlayers(players, numPlayers);
 
     dealDeckStart(players, numPlayers, deck, &deckTop);
     
     //ACTUAL GAME
     while (winner == 0) {
         if (currentTurn == 0) {
-            userTurn(&players[currentTurn], topCard);
+            userTurn(players, numPlayers, &players[currentTurn], &topCard);
             //winner = checkWin(players[currentTurn]);
             currentTurn++;
         } else {
-            //computerTurn(&players[currentTurn]);
+            computerTurn(&players[currentTurn], &topCard);
             //winner = checkWin(players[currentTurn]);
+            currentTurn++;
         }
 
         currentTurn = (currentTurn + order + numPlayers) % numPlayers;

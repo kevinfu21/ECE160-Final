@@ -13,7 +13,6 @@
 typedef enum {RED, GREEN, BLUE, YELLOW, WILD} Color;
 
 //Structs
-
 typedef struct {
     int ID;
     Color color;
@@ -24,12 +23,9 @@ typedef struct {
     int handSize;
 } Player;
 
-//put all functions prototypes here
-//FUNCTIONS 1 & 2 just to split the workload and make sure no merge crap happens
+//test functions
 void test1(void);
 void test2(void);
-
-
 
 //FUNCTIONS 1 - 
 /*
@@ -47,11 +43,14 @@ For EVERYONE to see:
 take in the proper inputs to be able to display this
 */
 
+/* game setup / menu */
 void prompt(int *drawUntilMatch, int *sz);
 void gamemodes(int *drawUntilMatch, int *sz);
-void initalizePlayers(Player *player, int numPlayer);
-void userTurn(Player *player, Card topCard);
-int validTurn(Card userCard, Card topCard);
+void initializePlayers(Player *player, int numPlayer);
+void userTurn(Player players[], int numPlayers, Player *player, Card *topCard);
+void computerTurn(Player *player, Card *topCard);
+int validTurn(Card userCard, Card *topCard);
+void printOpponentCardCount(Player players[], int numPlayers);
 void organizeHand(Player *player, int positionRemoved);
 
 void deal_cards(); //initial dealing

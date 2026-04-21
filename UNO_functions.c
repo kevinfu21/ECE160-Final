@@ -42,31 +42,38 @@ void gamemodes(int *drawUntilMatch, int *sz){
     printf("Exiting gamemodes... \n");
 }
 
-void initalizePlayers(Player *player, int numPlayers){
+void initializePlayers(Player *player, int numPlayers){
     for (int i = 0; i < numPlayers; i++) {
         player[i].handSize = 0;
     }
 }
 
 //User makes a valid move
-void userTurn(Player *player, Card topCard){
+void userTurn(Player players[], int numPlayers, Player *player, Card *topCard){
     int choice;
+
+    printf("Top card: ");
+    printHand(topCard, 1);
+
+    printf("Opponents Card Remaining: \n");
+    printOpponentCardCount(players, numPlayers);
+
     printf("Your Cards: \n");
     printHand(player->hand, player->handSize);
+
     printf("Which card would you like to play? (enter index 1-%d): ", player->handSize);
     do{
         scanf("%d", &choice);
-    } while((choice < 1 || choice > player->handSize) && !validTurn(player->hand[choice-1], topCard));
-
+    } while((choice < 1 || choice > player->handSize) || !validTurn(player->hand[choice-1], topCard));
+    *topCard = player->hand[choice - 1];
     organizeHand(player, choice-1);
     //Check if card follows rule, play card, remove from playersDeck
     //Check if its the last 2 card -> input UNO
 }
 
 //Set the top of the discard pile
-int validTurn(Card userCard, Card topCard){
-    if(userCard.color == topCard.color || userCard.color == WILD || userCard.ID == topCard.ID){
-        topCard = userCard;
+int validTurn(Card userCard, Card *topCard){
+    if(topCard->ID == -1 || userCard.color == topCard->color || userCard.color == WILD || userCard.ID == topCard->ID){
         return 1;
     } else return 0;
 }
@@ -77,9 +84,16 @@ void organizeHand(Player *player, int positionRemoved){
     player->handSize--;
 }
 
-void computerTurn(Player *player, Card topCard){
-    for(int i = 0; i < topCard.ID; i++){
+void printOpponentCardCount(Player players[], int numPlayers){
+    for(int i = 1; i < numPlayers; i++){
+        printf("Computer %d: %d \n", i, players[i].handSize);
+    }
+}
+
+void computerTurn(Player *player, Card *topCard){
+    for (int i = 0; i < player->handSize; i++){
         if(validTurn(player->hand[i], topCard)){
+            *topCard = player->hand[i];
             organizeHand(player, i);
             break;
         }
