@@ -14,7 +14,7 @@ void prompt(int *drawUntilMatch, int *sz){
 
         do{
             scanf("%d", &selection);
-        }while(selection == 1 || selection == 2);
+        }while(!(selection == 1 || selection == 2));
 
         if (selection == 2) gamemodes(drawUntilMatch, sz);
 
@@ -48,14 +48,41 @@ void initalizePlayers(Player *player, int numPlayers){
     }
 }
 
-void userTurn(Player *player){
+//User makes a valid move
+void userTurn(Player *player, Card topCard){
     int choice;
     printf("Your Cards: \n");
     printHand(player->hand, player->handSize);
     printf("Which card would you like to play? (enter index 1-%d): ", player->handSize);
     do{
         scanf("%d", &choice);
-    } while(choice < 1 || choice > player->handSize);
+    } while((choice < 1 || choice > player->handSize) && !validTurn(player->hand[choice-1], topCard));
+
+    organizeHand(player, choice-1);
     //Check if card follows rule, play card, remove from playersDeck
     //Check if its the last 2 card -> input UNO
+}
+
+//Set the top of the discard pile
+int validTurn(Card userCard, Card topCard){
+    if(userCard.color == topCard.color || userCard.color == WILD || userCard.ID == topCard.ID){
+        topCard = userCard;
+        return 1;
+    } else return 0;
+}
+
+//Organize the player's cards
+void organizeHand(Player *player, int positionRemoved){
+    player->hand[positionRemoved] = player->hand[player->handSize-1];
+    player->handSize--;
+}
+
+void computerTurn(Player *player, Card topCard){
+    for(int i = 0; i < topCard.ID; i++){
+        if(validTurn(player->hand[i], topCard)){
+            organizeHand(player, i);
+            break;
+        }
+    }
+    //drawCards(player); //create a draw card function    
 }

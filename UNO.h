@@ -50,8 +50,9 @@ take in the proper inputs to be able to display this
 void prompt(int *drawUntilMatch, int *sz);
 void gamemodes(int *drawUntilMatch, int *sz);
 void initalizePlayers(Player *player, int numPlayer);
-void userTurn(Player *player);
-
+void userTurn(Player *player, Card topCard);
+int validTurn(Card userCard, Card topCard);
+void organizeHand(Player *player, int positionRemoved);
 
 void deal_cards(); //initial dealing
 void draw_cards(); //draw card placed

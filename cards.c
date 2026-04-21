@@ -5,7 +5,7 @@
 
 // Create full UNO deck (108 cards) 
 void createDeck(Card deck[]) {
-    Color colors[] = {RED, GREEN, BLUE, YELLOW};
+    Color colors[] = {RED, GREEN, BLUE, YELLOW, WILD};
     int index = 0;
 
     for (int i = 0; i < 4; i++) {
@@ -55,11 +55,36 @@ void printDeck(Card deck[]) {
 
 void printHand(Card hand[], int size) {
     for (int i = 0; i < size; i++) {
-        printf("%d %d ", hand[i].ID);
+        int curCard = hand[i].ID;
+
+        // set color
+        switch (hand[i].color) {
+            case RED:    printf("\033[31m"); break;
+            case GREEN:  printf("\033[32m"); break;
+            case BLUE:   printf("\033[34m"); break;
+            case YELLOW: printf("\033[33m"); break;
+            case WILD:   printf("\033[35m"); break;
+        }
+        
+        // print card value
+        if (curCard >= 0 && curCard <= 9) {
+            printf("%d", curCard);
+        } else {
+            switch (curCard) {
+                case 10: printf("SKIP"); break;
+                case 11: printf("REVERSE"); break;
+                case 12: printf("DRAW2"); break;
+                case 13: printf("WILD"); break;
+                case 14: printf("WILD4"); break;
+                default: printf("?"); break;
+            }
+        }
+
+        // reset color + spacing
+        printf("\033[0m  ");
     }
     printf("\n");
 }
-
 
 void dealDeckStart(Player player[], int numPlayer, Card deck[], int *deckTop){
     for(int i = 0; i < numPlayer; i++){
