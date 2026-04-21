@@ -53,6 +53,14 @@ void printDeck(Card deck[]) {
     }
 }
 
+
+void printAllDecks(Player player[], int numPlayer) {
+    for (int i = 0; i < numPlayer, i++) {
+        printf("Player %s's deck: ", player[i].name);
+        printDeck(player[i].hand);
+    }
+}
+
 void printHand(Card hand[], int size) {
     for (int i = 0; i < size; i++) {
         int curCard = hand[i].ID;
@@ -94,3 +102,4 @@ void dealDeckStart(Player player[], int numPlayer, Card deck[], int *deckTop){
         }
     }
 }
+

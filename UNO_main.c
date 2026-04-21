@@ -20,15 +20,20 @@ int main(){
     srand(time(NULL));
     createDeck(deck);
     shuffleDeck(deck);
-    printDeck(deck);
+    //printDeck(deck);
 
     //prompt user for gamemode and create a pointer of players array
     prompt(&drawUntilMatch, &sevenZero);
-    //For organization, create a numPlayers() function???
+
+    //prompt user for number of players
     printf("Enter number of players: ");
-    scanf("%d", &numPlayers);
-    Player *players = malloc(numPlayers * sizeof(Player));
+    numPlayers = getInt();
+    struct Player *players = malloc(numPlayers * sizeof(Player));
+
+    //setup players
     initializePlayers(players, numPlayers);
+
+
 
     dealDeckStart(players, numPlayers, deck, &deckTop);
     

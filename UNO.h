@@ -13,15 +13,20 @@
 typedef enum {RED, GREEN, BLUE, YELLOW, WILD} Color;
 
 //Structs
+//card struct
 typedef struct {
     int ID;
     Color color;
 } Card;
 
+//player struct
 typedef struct {
+    int ID;
+    char name[25];
     Card hand[100];
     int handSize;
 } Player;
+
 
 //test functions
 void test1(void);
@@ -46,7 +51,6 @@ take in the proper inputs to be able to display this
 /* game setup / menu */
 void prompt(int *drawUntilMatch, int *sz);
 void gamemodes(int *drawUntilMatch, int *sz);
-void initializePlayers(Player *player, int numPlayer);
 void userTurn(Player players[], int numPlayers, Player *player, Card *topCard);
 void computerTurn(Player *player, Card *topCard);
 int validTurn(Card userCard, Card *topCard);
@@ -61,8 +65,8 @@ void skip(); //skip card
 void reverse(); //reverse card
 
 //FUNCTIONS 2 --
-
-
+int getInt();
+void initializePlayers(Player *player, int numPlayers);
 
 //CARDS.C 
 void createDeck(Card deck[]);
@@ -70,7 +74,7 @@ void shuffleDeck(Card deck[]);
 void printDeck(Card deck[]);
 void printHand(Card hand[], int size);
 void dealDeckStart(Player player[], int numPlayer, Card deck[], int *deckTop);
-
+void printAllDecks(Player player[], int numPlayer);
 
 /* setup / deck */
 void createDeck(Card deck[]);

@@ -1,16 +1,20 @@
 #include <stdio.h>
 #include "UNO.h"
 
+
 void test1() {
     printf("f1 test\n");
 }
+
 
 void prompt(int *drawUntilMatch, int *sz){
     int selection;
     int size;
     do{
+        printf("------------------------------\n");
         printf("(1) Start Game\n");
         printf("(2) Gamemodes\n");
+        printf("Select: ");
 
         do{
             scanf("%d", &selection);
@@ -20,7 +24,7 @@ void prompt(int *drawUntilMatch, int *sz){
 
     } while (selection != 1);
 
-    printf("Starting...\n");
+    printf("Starting...\n------------------------------\n");
     
 }
 
@@ -28,9 +32,10 @@ void prompt(int *drawUntilMatch, int *sz){
 void gamemodes(int *drawUntilMatch, int *sz){
     int selection;
     do{
+        printf("------------------------------\n");
         printf("Draw Until Match - %s\n", *drawUntilMatch ? "On" : "Off");
         printf("7-0 (Play a 7 swap your hands with another player, play a 0 makes everyone swap hands): - %s\n", *sz ? "On" : "Off");
-        printf("Select the gamemode you want to change (1/2) or to exit (3): \n");
+        printf("Select the gamemode you want to change (1/2) or to exit (3): ");
 
         do{
         scanf("%d", &selection);
@@ -42,11 +47,6 @@ void gamemodes(int *drawUntilMatch, int *sz){
     printf("Exiting gamemodes... \n");
 }
 
-void initializePlayers(Player *player, int numPlayers){
-    for (int i = 0; i < numPlayers; i++) {
-        player[i].handSize = 0;
-    }
-}
 
 //User makes a valid move
 void userTurn(Player players[], int numPlayers, Player *player, Card *topCard){
