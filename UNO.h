@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #define DECK_SIZE 108
-#define MAX_PLAYERS 4
+#define MAX_PLAYERS 6 //arbitrary
 #define STARTING_HAND 7
 
 #define SKIP 10
@@ -15,7 +15,7 @@ typedef enum {RED, GREEN, BLUE, YELLOW, WILD} Color;
 //Structs
 //card struct
 typedef struct {
-    int ID;
+    int ID; //1-9, regular cards, 10-14, special cards
     Color color;
 } Card;
 
@@ -33,25 +33,12 @@ void test1(void);
 void test2(void);
 
 //FUNCTIONS 1 - 
-/*
-this'll one will be a pretty big one (draw_board)
-INCLUDE SPACE FOR:
 
-For EVERYONE to see:
-- Current card
-- The cards before the current one, if time allows
-- Turn number
-- Number of cards each player has
-
-- At the bottom, each person's "Menu," theoretically "PRIVATE" for each player, with:
-    - Player's card
-take in the proper inputs to be able to display this
-*/
 
 /* game setup / menu */
 void prompt(int *drawUntilMatch, int *sz);
 void gamemodes(int *drawUntilMatch, int *sz);
-void userTurn(Player players[], int numPlayers, Player *player, Card *topCard);
+int userTurn(Player players[], int numPlayers, Player *player, Card *topCard);
 void computerTurn(Player *player, Card *topCard);
 int validTurn(Card userCard, Card *topCard);
 void printOpponentCardCount(Player players[], int numPlayers);
@@ -67,6 +54,7 @@ void reverse(); //reverse card
 //FUNCTIONS 2 --
 int getInt();
 void initializePlayers(Player *player, int numPlayers);
+void printPublicUI(int numPlayers, int order, Card *topCard, Player players[], int currentTurn);
 
 //CARDS.C 
 void createDeck(Card deck[]);

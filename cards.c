@@ -8,6 +8,7 @@ void createDeck(Card deck[]) {
     Color colors[] = {RED, GREEN, BLUE, YELLOW, WILD};
     int index = 0;
 
+    //colored cards
     for (int i = 0; i < 4; i++) {
         Color c = colors[i];
 
@@ -47,20 +48,24 @@ void shuffleDeck(Card deck[]){
         deck[j] = temp;
     }
 }
+
+//for testing: print decks by ID and color enum
 void printDeck(Card deck[]) {
     for (int i = 0; i < DECK_SIZE; i++) {
-        printf("%d %d\n", deck[i].ID, deck[i].color);
+        printf("%d %d\t", deck[i].ID, deck[i].color);
     }
 }
 
-
+//for testing: print all player hands
 void printAllDecks(Player player[], int numPlayer) {
-    for (int i = 0; i < numPlayer, i++) {
+    for (int i = 0; i < numPlayer; i++) {
         printf("Player %s's deck: ", player[i].name);
         printDeck(player[i].hand);
+        printf("\n");
     }
 }
 
+//print cards, tab separated
 void printHand(Card hand[], int size) {
     for (int i = 0; i < size; i++) {
         int curCard = hand[i].ID;
@@ -94,6 +99,7 @@ void printHand(Card hand[], int size) {
     printf("\n");
 }
 
+//deal starter cards
 void dealDeckStart(Player player[], int numPlayer, Card deck[], int *deckTop){
     for(int i = 0; i < numPlayer; i++){
         player[i].handSize = 7;
@@ -103,3 +109,7 @@ void dealDeckStart(Player player[], int numPlayer, Card deck[], int *deckTop){
     }
 }
 
+//draw n cards
+void draw(int n, int targetPlayerID, Player players[], ) {
+
+}

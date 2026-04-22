@@ -18,6 +18,9 @@ void prompt(int *drawUntilMatch, int *sz){
 
         do{
             scanf("%d", &selection);
+            if (!(selection == 1 || selection == 2)) {
+                printf("Invalid Input! Try again: ");
+            }
         }while(!(selection == 1 || selection == 2));
 
         if (selection == 2) gamemodes(drawUntilMatch, sz);
@@ -39,6 +42,10 @@ void gamemodes(int *drawUntilMatch, int *sz){
 
         do{
         scanf("%d", &selection);
+        if (selection < 1 || selection > 3) {
+        printf("Invalid Input! Try again: ");
+        }
+
         }while(selection < 1 || selection > 3);
 
         if(selection == 1) *drawUntilMatch = !(*drawUntilMatch);
@@ -48,12 +55,12 @@ void gamemodes(int *drawUntilMatch, int *sz){
 }
 
 
+//(I'm going to move this to F2 and make some changes for pvp, original is below. - K)
 //User makes a valid move
+
+/*
 void userTurn(Player players[], int numPlayers, Player *player, Card *topCard){
     int choice;
-
-    printf("Top card: ");
-    printHand(topCard, 1);
 
     printf("Opponents Card Remaining: \n");
     printOpponentCardCount(players, numPlayers);
@@ -70,12 +77,16 @@ void userTurn(Player players[], int numPlayers, Player *player, Card *topCard){
     //Check if card follows rule, play card, remove from playersDeck
     //Check if its the last 2 card -> input UNO
 }
+*/
 
 //Set the top of the discard pile
 int validTurn(Card userCard, Card *topCard){
     if(topCard->ID == -1 || userCard.color == topCard->color || userCard.color == WILD || userCard.ID == topCard->ID){
         return 1;
-    } else return 0;
+    } else {
+        printf("Invalid card! Try again: ");
+        return 0;
+    }
 }
 
 //Organize the player's cards
@@ -98,5 +109,10 @@ void computerTurn(Player *player, Card *topCard){
             break;
         }
     }
-    //drawCards(player); //create a draw card function    
+    
 }
+
+
+
+//drawCards(player); //create a draw card function 
+//^^ made it in the cards.c file - K
