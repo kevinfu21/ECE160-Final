@@ -3,6 +3,17 @@
 #include <time.h>
 #include "UNO.h"
 
+/*
+TO DO - K
+- draw glitch, skipping multiple turns when +2 put down
+- win detection
+- reshuffling
+- uno detection
+- reverse player count weird
+- 
+
+*/
+
 int main(){
     int numPlayers; //number of players
     int order = 1; //reverse(-1) or not(1)
@@ -42,6 +53,11 @@ int main(){
     //ACTUAL GAME
     int returnID; //ID of card played
     while (winner == 0) {
+        //make some space so people don't see the private space
+        for (int i = 0; i < 15; i++) {
+            printf("\n");
+        }
+
         //print Direction, card counts, whose turn it is, and top card.
         printPublicUI(numPlayers, order, &topCard, players, currentTurn);
 
@@ -50,10 +66,12 @@ int main(){
 
         returnID = userTurn(players, numPlayers, &players[currentTurn], &topCard); //play turn, and return the ID of card played
 
+        //testing
+        printf("%d", returnID);
 
         //winner = checkWin(players[currentTurn]);
         //remember implement skips and reverse later
-        if(returnID > 0 || returnID < 10) {//if normal cards, progress turns as normal
+        if(returnID > 0 && returnID < 10) {//if normal cards, progress turns as normal
         currentTurn += order;
         } else if (returnID == 10) { //skip
             currentTurn += order * 2;
@@ -61,19 +79,25 @@ int main(){
             order *= -1;
             currentTurn += order;
         } else if (returnID == 12) { //draw 2
-            //code for drawing cards
+            draw(2, (currentTurn += order) % numPlayers, players, &deckTop, deck);
+            currentTurn += 2 * order; //skip turn of drawing person
         } else if (returnID == 13) { //wild card
-            //code for wild
+            chooseColor(&topCard, returnID);
+            currentTurn += order;
         } else if (returnID == 14) { //draw 4
-            //code for draw 4
+            chooseColor(&topCard, returnID);
+            draw(2, (currentTurn += order) % numPlayers, players, &deckTop, deck);
+            currentTurn += order;
+
         } else if (returnID == 0) {
-            //code for draw card
+            draw(1, currentTurn, players, &deckTop, deck);
+            currentTurn += order;
         } else {
             printf("If you're seeing this something went wrong...\n");
         }
         
         
-        //skipping computer for now
+        //skipping computer for now..
         /*
         else {
             computerTurn(&players[currentTurn], &topCard);
@@ -81,13 +105,13 @@ int main(){
             currentTurn++;
         */
         
-        //Mod the turns
+        //Proper turns
+        if (currentTurn < 0) {
+            currentTurn += numPlayers;
+        } else {
         currentTurn = currentTurn % numPlayers;
-
-        //make some space so people don't see the private space
-        for (int i; i < 30; i++) {
-            printf("\n");
         }
+
     }
     free(players);
     return 0;

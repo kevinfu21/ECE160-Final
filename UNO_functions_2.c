@@ -43,7 +43,7 @@ void printPublicUI(int numPlayers, int order, Card *topCard, Player players[], i
     }
 
     //print player's turn
-    printf("\nPlayer %d, %s, your turn!\n", currentTurn, players[currentTurn].name);
+    printf("\nPlayer %d, %s, your turn!\n", currentTurn + 1, players[currentTurn].name);
 
     //print top card
     printf("Top card: ");
@@ -73,3 +73,4 @@ int userTurn(Player players[], int numPlayers, Player *player, Card *topCard){
 
     return ID;
 }
+

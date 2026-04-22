@@ -110,6 +110,25 @@ void dealDeckStart(Player player[], int numPlayer, Card deck[], int *deckTop){
 }
 
 //draw n cards
-void draw(int n, int targetPlayerID, Player players[], ) {
+void draw(int n, int targetPlayerID, Player players[], int *deckTop, Card deck[]) {
+    for (int i = 0; i < n; i++) {
+        players[targetPlayerID].hand[players[targetPlayerID].handSize] = deck[(*deckTop)++];
+        players[targetPlayerID].handSize++;
+    }
+}
 
+int chooseColor(Card *topCard, int returnID) {
+    printf("What color? (Enter index 1-4)");
+    Card colorDeck[4] = {
+        {1, RED},
+        {2, GREEN},
+        {3, BLUE},
+        {4, YELLOW}
+    };
+    printHand(colorDeck, 4);
+
+    int color;
+    scanf("%d", &color);
+    Card card = {returnID, color};
+    topCard = &card;
 }

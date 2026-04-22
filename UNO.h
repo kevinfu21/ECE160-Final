@@ -56,6 +56,7 @@ int getInt();
 void initializePlayers(Player *player, int numPlayers);
 void printPublicUI(int numPlayers, int order, Card *topCard, Player players[], int currentTurn);
 
+
 //CARDS.C 
 void createDeck(Card deck[]);
 void shuffleDeck(Card deck[]);
@@ -63,6 +64,8 @@ void printDeck(Card deck[]);
 void printHand(Card hand[], int size);
 void dealDeckStart(Player player[], int numPlayer, Card deck[], int *deckTop);
 void printAllDecks(Player player[], int numPlayer);
+void draw(int n, int targetPlayerID, Player players[], int *deckTop, Card deck[]);
+int chooseColor(Card *topCard, int returnID);
 
 /* setup / deck */
 void createDeck(Card deck[]);
