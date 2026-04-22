@@ -118,7 +118,7 @@ void draw(int n, int targetPlayerID, Player players[], int *deckTop, Card deck[]
 }
 
 int chooseColor(Card *topCard, int returnID) {
-    printf("What color? (Enter index 1-4)");
+    printf("What color? (Enter index 1-4)\n");
     Card colorDeck[4] = {
         {1, RED},
         {2, GREEN},
@@ -127,8 +127,19 @@ int chooseColor(Card *topCard, int returnID) {
     };
     printHand(colorDeck, 4);
 
+    printf("Enter number: ");
     int color;
     scanf("%d", &color);
-    Card card = {returnID, color};
-    topCard = &card;
+    color--;
+
+    topCard->color = color;
+    topCard->ID = returnID;
+}
+
+
+//reshuffle deck
+void resetDeck(Card deck[], int *deckTop) {
+    *deckTop = 0;
+    createDeck(deck);
+    shuffleDeck(deck);
 }

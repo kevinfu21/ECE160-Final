@@ -54,15 +54,33 @@ void printPublicUI(int numPlayers, int order, Card *topCard, Player players[], i
 int userTurn(Player players[], int numPlayers, Player *player, Card *topCard){
     int choice;
 
+    if (player->handSize == 0) { //skipturn if won already
+        return -2;
+    }
+    //ISSUE - WINNER CAN STILL BE INTERACTED WITH, THIS IS JUST A TEMP WORKAROUND
+
+
+    //make sure no peeky peeky
+    printf("Type 0 when you're ready: ");
+    int a;
+    // do {
+    //     scanf("%d", &a);
+    // } while(a != 0);
+
     //print player's hand
     printf("Your Cards: \n");
     printHand(player->hand, player->handSize);
 
-    printf("Which card would you like to play? (enter index 1-%d or type 0 to draw.): ", player->handSize);
+    printf("Which card would you like to play? (enter index 1-%d or type 0 to draw. Type -1 to reset deck.): ", player->handSize);
     do{
         scanf("%d", &choice);
-        if (choice == 0) {
+
+        if (choice == 0) { //draw cards
             return 0;
+        }
+
+        if (choice == -1) { //reset deck
+            return -1;
         }
     } while((choice < 1 || choice > player->handSize) || !validTurn(player->hand[choice-1], topCard));
 
@@ -74,3 +92,82 @@ int userTurn(Player players[], int numPlayers, Player *player, Card *topCard){
     return ID;
 }
 
+int checkUno(Player *player) {
+    if (player->handSize == 1) {
+        return 1;
+    }
+    else return 0;
+}
+
+void screamUNO(Player *player, Card deck[], int deckTop, int currentTurn, Player players[]) {
+    //make some space
+    for (int i = 0; i < 50; i++){
+    printf("\n");
+    }
+    //print the big boi UNO
+    UNO();
+
+    printf("Player %d, %s, has one card! Scream UNO!!\n\n", currentTurn + 1, player->name);
+
+    printf("Type 0 if %s is safe, and 1 if they failed to say UNO in time.", player->name);
+
+    for (int i = 0; i < 10; i++){
+    printf("\n");
+    }
+
+    printf("Response: ");
+    int safe;
+    scanf("%d", &safe);
+
+    if(safe) {
+        draw(2, currentTurn, players, &deckTop, deck);
+    }
+}
+
+void UNO() {
+    printf("                                            ,---,  \n");
+printf("                       ,--.    ,----..   ,`--.' |  \n");
+printf("                     ,--.'|   /   /   \\  |   :  :  \n");
+printf("         ,--,    ,--,:  : |  /   .     : '   '  ;  \n");
+printf("       ,'_ /| ,`--.'`|  ' : .   /   ;.  \\|   |  |  \n");
+printf("  .--. |  | : |   :  :  | |.   ;   /  ` ;'   :  ;  \n");
+printf(",'_ /| :  . | :   |   \\ | :;   |  ; \\ ; ||   |  '  \n");
+printf("|  ' | |  . . |   : '  '; ||   :  | ; | ''   :  |  \n");
+printf("|  | ' |  | | '   ' ;.    ;.   |  ' ' ' :;   |  ;  \n");
+printf(":  | | :  ' ; |   | | \\   |'   ;  \\; /  |`---'. |  \n");
+printf("|  ; ' |  | ' '   : |  ; .' \\   \\  ',  /  `--..`;  \n");
+printf(":  | : ;  ; | |   | '`--'    ;   :    /  .--,_     \n");
+printf("'  :  `--'   \\'   : |         \\   \\ .'   |    |`.  \n");
+printf(":  ,      .-./;   |.'          `---`     `-- -`, ; \n");
+printf(" `--`----'    '---'                        '---`\"  \n");
+}
+
+                                            
+void checkWin(Player *player, int *numWinners, Podium podium[], int *winners) {
+    if (player->handSize == 0) {
+        strcpy(podium[*numWinners].name, player->name);
+
+        switch (*numWinners) {
+            case 0:
+            strcpy(podium[*numWinners].placeText, "First Place");
+            *winners = 1; //place where done
+            break;
+            case 1: 
+            strcpy(podium[*numWinners].placeText, "Second Place");
+            //support for more winners if u want to implement that
+            break;
+        }
+            (*numWinners)++;
+    }
+}
+
+
+
+void printWinners(int numWinners, Podium podium[]) {
+    for (int i = 0; i < 50; i++) {
+        printf("\n");
+    }
+    for (int i = 0; i < numWinners; i++) {
+        printf("%s: %s\n", podium[i].placeText, podium[i].name);
+    }
+}

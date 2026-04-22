@@ -27,6 +27,11 @@ typedef struct {
     int handSize;
 } Player;
 
+typedef struct {
+    char name[25];
+    char placeText[25];
+} Podium;
+
 
 //test functions
 void test1(void);
@@ -38,24 +43,21 @@ void test2(void);
 /* game setup / menu */
 void prompt(int *drawUntilMatch, int *sz);
 void gamemodes(int *drawUntilMatch, int *sz);
-int userTurn(Player players[], int numPlayers, Player *player, Card *topCard);
 void computerTurn(Player *player, Card *topCard);
 int validTurn(Card userCard, Card *topCard);
 void printOpponentCardCount(Player players[], int numPlayers);
 void organizeHand(Player *player, int positionRemoved);
 
-void deal_cards(); //initial dealing
-void draw_cards(); //draw card placed
-int validate_turn(); //make sure u play right moves
-void next_turn(); //what it sounds like
-void skip(); //skip card
-void reverse(); //reverse card
 
 //FUNCTIONS 2 --
 int getInt();
 void initializePlayers(Player *player, int numPlayers);
 void printPublicUI(int numPlayers, int order, Card *topCard, Player players[], int currentTurn);
-
+int userTurn(Player players[], int numPlayers, Player *player, Card *topCard);
+int checkUno(Player *player);
+void UNO();
+void screamUNO(Player *player, Card deck[], int deckTop, int currentTurn, Player players[]);
+void checkWin(Player *player, int *numWinners, Podium podium[], int *winners);void printWinners(int numWinners, Podium podium[]);
 
 //CARDS.C 
 void createDeck(Card deck[]);
@@ -66,6 +68,8 @@ void dealDeckStart(Player player[], int numPlayer, Card deck[], int *deckTop);
 void printAllDecks(Player player[], int numPlayer);
 void draw(int n, int targetPlayerID, Player players[], int *deckTop, Card deck[]);
 int chooseColor(Card *topCard, int returnID);
+void resetDeck(Card deck[], int *deckTop);
+
 
 /* setup / deck */
 void createDeck(Card deck[]);
