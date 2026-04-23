@@ -63,9 +63,9 @@ int userTurn(Player players[], int numPlayers, Player *player, Card *topCard){
     //make sure no peeky peeky
     printf("Type 0 when you're ready: ");
     int a;
-    // do {
-    //     scanf("%d", &a);
-    // } while(a != 0);
+    do {
+        scanf("%d", &a);
+    } while(a != 0);
 
     //print player's hand
     printf("Your Cards: \n");

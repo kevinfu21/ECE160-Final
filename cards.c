@@ -117,7 +117,7 @@ void draw(int n, int targetPlayerID, Player players[], int *deckTop, Card deck[]
     }
 }
 
-int chooseColor(Card *topCard, int returnID) {
+void chooseColor(Card *topCard, int returnID) {
     printf("What color? (Enter index 1-4)\n");
     Card colorDeck[4] = {
         {1, RED},

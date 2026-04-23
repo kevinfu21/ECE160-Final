@@ -67,7 +67,7 @@ void printHand(Card hand[], int size);
 void dealDeckStart(Player player[], int numPlayer, Card deck[], int *deckTop);
 void printAllDecks(Player player[], int numPlayer);
 void draw(int n, int targetPlayerID, Player players[], int *deckTop, Card deck[]);
-int chooseColor(Card *topCard, int returnID);
+void chooseColor(Card *topCard, int returnID);
 void resetDeck(Card deck[], int *deckTop);
 
 
