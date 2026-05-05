@@ -80,13 +80,13 @@ int main(){
         //print Direction, card counts, whose turn it is, and top card.
         printPublicUI(numPlayers, order, &topCard, players, currentTurn);
 
-        printf("%d cards left in deck.\n\n", 108 - deckTop); 
+        printf("%d cards left in deck.\n------------------------------\n", 108 - deckTop); 
         
 
         if (playComputers && currentTurn != 0) {
             returnID = computerTurn(&players[currentTurn], &topCard, deck, &deckTop);
         } else {
-            printf("\n\n\n\n------------------------------\nPrivate Section - Only Current Player Should View\n------------------------------\n");
+            printf("\n\n\n\n\n\n\n\n------------------------------\nPrivate Section - Only Current Player Should View\n------------------------------\n");
             returnID = userTurn(players, numPlayers, &players[currentTurn], &topCard);
         }
 
