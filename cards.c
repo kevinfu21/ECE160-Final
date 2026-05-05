@@ -102,8 +102,8 @@ void printHand(Card hand[], int size) {
 //deal starter cards
 void dealDeckStart(Player player[], int numPlayer, Card deck[], int *deckTop){
     for(int i = 0; i < numPlayer; i++){
-        player[i].handSize = 7;
-        for(int j = 0; j < 7; j++){
+        player[i].handSize = STARTING_HAND;
+        for(int j = 0; j < STARTING_HAND; j++){
             player[i].hand[j] = deck[(*deckTop)++];
         }
     }
@@ -129,8 +129,10 @@ void chooseColor(Card *topCard, int returnID) {
 
     printf("Enter number: ");
     int color;
-    scanf("%d", &color);
-    color--;
+    do{
+        scanf("%d", &color);
+        color--;
+    }while(color < 0 || color > 3);
 
     topCard->color = color;
     topCard->ID = returnID;

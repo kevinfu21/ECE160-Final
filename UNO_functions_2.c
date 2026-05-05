@@ -75,14 +75,14 @@ int userTurn(Player players[], int numPlayers, Player *player, Card *topCard){
     do{
         scanf("%d", &choice);
 
-        if (choice == 0) { //draw cards
-            return 0;
+        if (choice == 0) { //draw cards  
+            return -2;
         }
 
         if (choice == -1) { //reset deck
             return -1;
         }
-    } while((choice < 1 || choice > player->handSize) || !validTurn(player->hand[choice-1], topCard));
+    } while((choice < 1 || choice > player->handSize) || !validTurn(player->hand[choice-1], topCard, 0));
 
     int ID = player->hand[choice-1].ID;
     *topCard = player->hand[choice - 1];
@@ -140,34 +140,4 @@ printf(":  | : ;  ; | |   | '`--'    ;   :    /  .--,_     \n");
 printf("'  :  `--'   \\'   : |         \\   \\ .'   |    |`.  \n");
 printf(":  ,      .-./;   |.'          `---`     `-- -`, ; \n");
 printf(" `--`----'    '---'                        '---`\"  \n");
-}
-
-                                            
-void checkWin(Player *player, int *numWinners, Podium podium[], int *winners) {
-    if (player->handSize == 0) {
-        strcpy(podium[*numWinners].name, player->name);
-
-        switch (*numWinners) {
-            case 0:
-            strcpy(podium[*numWinners].placeText, "First Place");
-            *winners = 1; //place where done
-            break;
-            case 1: 
-            strcpy(podium[*numWinners].placeText, "Second Place");
-            //support for more winners if u want to implement that
-            break;
-        }
-            (*numWinners)++;
-    }
-}
-
-
-
-void printWinners(int numWinners, Podium podium[]) {
-    for (int i = 0; i < 50; i++) {
-        printf("\n");
-    }
-    for (int i = 0; i < numWinners; i++) {
-        printf("%s: %s\n", podium[i].placeText, podium[i].name);
-    }
 }

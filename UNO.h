@@ -43,21 +43,20 @@ void test2(void);
 /* game setup / menu */
 void prompt(int *drawUntilMatch, int *sz);
 void gamemodes(int *drawUntilMatch, int *sz);
-void computerTurn(Player *player, Card *topCard);
-int validTurn(Card userCard, Card *topCard);
+int computerTurn(Player *player, Card *topCard, Card deck[], int *deckTop);
+int validTurn(Card userCard, Card *topCard, int computerMove);
 void printOpponentCardCount(Player players[], int numPlayers);
 void organizeHand(Player *player, int positionRemoved);
 
 
 //FUNCTIONS 2 --
 int getInt();
-void initializePlayers(Player *player, int numPlayers);
+void initializePlayers(Player player[], int numPlayers);
 void printPublicUI(int numPlayers, int order, Card *topCard, Player players[], int currentTurn);
 int userTurn(Player players[], int numPlayers, Player *player, Card *topCard);
 int checkUno(Player *player);
 void UNO();
 void screamUNO(Player *player, Card deck[], int deckTop, int currentTurn, Player players[]);
-void checkWin(Player *player, int *numWinners, Podium podium[], int *winners);void printWinners(int numWinners, Podium podium[]);
 
 //CARDS.C 
 void createDeck(Card deck[]);

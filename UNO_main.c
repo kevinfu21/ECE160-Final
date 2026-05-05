@@ -18,6 +18,7 @@ int main(){
     int drawUntilMatch = 0;
     int sevenZero = 0;
     int deckTop = 0;
+    int playComputers = 0;
     
     
     Card deck[DECK_SIZE]; //deck
@@ -30,17 +31,17 @@ int main(){
     //printDeck(deck);
 
     //prompt user for gamemode and create a pointer of players array
-    prompt(&drawUntilMatch, &sevenZero);
+    prompt(&playComputers, &sevenZero);
 
     //prompt user for number of players
     printf("Enter number of players(Max %d): ", MAX_PLAYERS);
     numPlayers = getInt();
+    //forces numPlayers be 2 or greater when playing with computers 
+    if (playComputers && numPlayers < 2) {
+        numPlayers = 2;
+    }
+
     Player *players = malloc(numPlayers * sizeof(Player));
-
-    //setup podium
-    int numWinners = 0; //
-    Podium *podium = malloc(numPlayers *sizeof(Podium));
-
 
     //setup players
     initializePlayers(players, numPlayers);
@@ -50,7 +51,10 @@ int main(){
 
     //place top card
     Card topCard = deck[deckTop++];
-    
+
+    if (topCard.color == 4) {
+        topCard.color = rand() % 4;
+    }
     //for testing purposes
     //printAllDecks(players, numPlayers);
 
@@ -58,65 +62,78 @@ int main(){
     int returnID; //ID of card played
     int deckReset = 0; //If deck was reset
     while (winner == 0) {
-        //make some space so people don't see the private space
-        for (int i = 0; i < 15; i++) {
-            printf("\n");
-        }
-
-        //print Direction, card counts, whose turn it is, and top card.
-        printPublicUI(numPlayers, order, &topCard, players, currentTurn);
-
+        
         //if deck is shuffled
         if (deckReset) {
             printf("Deck was reset.\n");
             deckReset = 0;
         }
 
-        printf("%d cards left in deck.", 108 - deckTop); 
+        //make some space so people don't see the private space
+        if (playComputers && currentTurn != 0){ 
+            for (int i = 0; i < 14; i++) {
+                printf("\n");
+            }
+        }
+        printf("\n");
 
-        printf("\n\n\n\n\n\n------------------------------\nPrivate Section - Only Current Player Should View\n------------------------------\n");
+        //print Direction, card counts, whose turn it is, and top card.
+        printPublicUI(numPlayers, order, &topCard, players, currentTurn);
 
+        printf("%d cards left in deck.\n\n", 108 - deckTop); 
+        
 
-        returnID = userTurn(players, numPlayers, &players[currentTurn], &topCard); //play turn, and return the ID of card played
+        if (playComputers && currentTurn != 0) {
+            returnID = computerTurn(&players[currentTurn], &topCard, deck, &deckTop);
+        } else {
+            printf("\n\n\n\n------------------------------\nPrivate Section - Only Current Player Should View\n------------------------------\n");
+            returnID = userTurn(players, numPlayers, &players[currentTurn], &topCard);
+        }
+
+        //Win
+        if (players[currentTurn].handSize == 0) {
+            break;
+        }
 
         //logic for UNO(one card) it's gonna be manual
         if (checkUno(&players[currentTurn]) && returnID != 0 && returnID != -1 && returnID != -2) {
             screamUNO(&players[currentTurn], deck, deckTop, currentTurn, players);
         }
 
-        //check for win
-        checkWin(&players[currentTurn], &numWinners, podium, &winner);
-
-
-        if(returnID > 0 && returnID < 10) {//if normal cards, progress turns as normal
+        if(returnID >= 0 && returnID < 10) {//if normal cards, progress turns as normal
         currentTurn += order;
         } else if (returnID == 10) { //skip
             currentTurn += order * 2;
         } else if (returnID == 11) { //reverse
-            order *= -1;
-            currentTurn += order;
+            if (numPlayers == 2) { //if two players reverse acts as skip
+                currentTurn += order * 2;
+            } else {
+                order *= -1;
+                currentTurn += order;
+            };
         } else if (returnID == 12) { //draw 2
             draw(2, (currentTurn + order) % numPlayers, players, &deckTop, deck);
             currentTurn += 2*order; //skip turn of drawing person
         } else if (returnID == 13) { //wild card
-            chooseColor(&topCard, returnID);
+            if (!(playComputers && currentTurn != 0)){
+                chooseColor(&topCard, returnID);
+            }
             currentTurn += order;
         } else if (returnID == 14) { //draw 4
-            chooseColor(&topCard, returnID);
+            if (!(playComputers && currentTurn != 0)){
+                chooseColor(&topCard, returnID);
+            }
             draw(4, (currentTurn + order) % numPlayers, players, &deckTop, deck);
             currentTurn += 2*order;
 
-        } else if (returnID == 0) { //self draw 1
-            draw(1, currentTurn, players, &deckTop, deck);
-
-        }else if (returnID == -1) {
+        } else if (returnID == -1) {
             resetDeck(deck, &deckTop);
             //no change to turn, deck reset;
             deckReset = 1;
             
-        } else if (returnID == -2) {
-            currentTurn++;
-            //TEMPORARY WORKAROUND FOR WINNER, TURN SKIP, FIX LATER
+        } else if (returnID == -2) { //self draw 1
+            draw(1, currentTurn, players, &deckTop, deck);
+
         }
         else {
             printf("If you're seeing this something went wrong...\n");
@@ -136,19 +153,16 @@ int main(){
             //winner = checkWin(players[currentTurn]);
             currentTurn++;
         */
-        
+
         //Proper turns
         if (currentTurn < 0) {
             currentTurn += numPlayers;
         } else {
         currentTurn = currentTurn % numPlayers;
         }
-
     }
 
-    //print winners
-    printWinners(numWinners, podium);
-
+    printf("%s won the game!\n", players[currentTurn].name);
 
     free(players);
     return 0;

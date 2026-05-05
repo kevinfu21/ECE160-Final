@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "UNO.h"
 
 
@@ -32,25 +33,24 @@ void prompt(int *drawUntilMatch, int *sz){
 }
 
 //7-0 or Draw Until Match
-void gamemodes(int *drawUntilMatch, int *sz){
+void gamemodes(int *playComputers, int *sz){
     int selection;
-    do{
+    do {
         printf("------------------------------\n");
-        printf("Draw Until Match - %s\n", *drawUntilMatch ? "On" : "Off");
-        printf("7-0 (Play a 7 swap your hands with another player, play a 0 makes everyone swap hands): - %s\n", *sz ? "On" : "Off");
-        printf("Select the gamemode you want to change (1/2) or to exit (3): ");
+        printf("Play with computer - %s\n", *playComputers ? "On" : "Off");
+        printf("Select the gamemode you want to change (1) or to exit (3): ");
+        do {
+            scanf("%d", &selection);
+            if (selection != 1 && selection != 3) {
+                printf("Invalid Input! Try again: ");
+            }
+        } while (selection != 1 && selection != 3);
+        
+        if (selection == 1)
+            *playComputers = !(*playComputers);
 
-        do{
-        scanf("%d", &selection);
-        if (selection < 1 || selection > 3) {
-        printf("Invalid Input! Try again: ");
-        }
+    } while (selection != 3);
 
-        }while(selection < 1 || selection > 3);
-
-        if(selection == 1) *drawUntilMatch = !(*drawUntilMatch);
-        else if(selection == 2) *sz = !(*sz);
-    } while(selection != 3);
     printf("Exiting gamemodes... \n");
 }
 
@@ -80,11 +80,13 @@ void userTurn(Player players[], int numPlayers, Player *player, Card *topCard){
 */
 
 //Set the top of the discard pile
-int validTurn(Card userCard, Card *topCard){
+int validTurn(Card userCard, Card *topCard, int computerMove){
     if(topCard->ID == -1 || userCard.color == topCard->color || userCard.color == WILD || userCard.ID == topCard->ID){
         return 1;
     } else {
-        printf("Invalid card! Try again: ");
+        if(!computerMove){
+            printf("Invalid card! Try again: ");
+        }
         return 0;
     }
 }
@@ -101,18 +103,25 @@ void printOpponentCardCount(Player players[], int numPlayers){
     }
 }
 
-void computerTurn(Player *player, Card *topCard){
-    for (int i = 0; i < player->handSize; i++){
-        if(validTurn(player->hand[i], topCard)){
+int computerTurn(Player *player, Card *topCard, Card deck[], int *deckTop) {
+    for (int i = 0; i < player->handSize; i++) {
+        if (validTurn(player->hand[i], topCard, 1)) {
+            int returnID = player->hand[i].ID;
+
             *topCard = player->hand[i];
             organizeHand(player, i);
-            break;
-        }
+
+            if (returnID == 13 || returnID == 14) {
+                topCard->color = rand() % 4;
+            }
+
+            return returnID;
+        } 
     }
-    
+
+    // draw if no valid move
+    player->hand[player->handSize++] = deck[(*deckTop)++];
+    return -2;
 }
-
-
-
 //drawCards(player); //create a draw card function 
 //^^ made it in the cards.c file - K
