@@ -70,8 +70,8 @@ int main(){
         }
 
         //make some space so people don't see the private space
-        if (playComputers && currentTurn != 0){ 
-            for (int i = 0; i < 14; i++) {
+        if ((playComputers == 0) || (currentTurn != 0)){ 
+            for (int i = 0; i < 50; i++) {
                 printf("\n");
             }
         }
