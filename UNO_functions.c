@@ -55,29 +55,6 @@ void gamemodes(int *playComputers, int *sz){
 }
 
 
-//(I'm going to move this to F2 and make some changes for pvp, original is below. - K)
-//User makes a valid move
-
-/*
-void userTurn(Player players[], int numPlayers, Player *player, Card *topCard){
-    int choice;
-
-    printf("Opponents Card Remaining: \n");
-    printOpponentCardCount(players, numPlayers);
-
-    printf("Your Cards: \n");
-    printHand(player->hand, player->handSize);
-
-    printf("Which card would you like to play? (enter index 1-%d): ", player->handSize);
-    do{
-        scanf("%d", &choice);
-    } while((choice < 1 || choice > player->handSize) || !validTurn(player->hand[choice-1], topCard));
-    *topCard = player->hand[choice - 1];
-    organizeHand(player, choice-1);
-    //Check if card follows rule, play card, remove from playersDeck
-    //Check if its the last 2 card -> input UNO
-}
-*/
 
 //Set the top of the discard pile
 int validTurn(Card userCard, Card *topCard, int computerMove){
@@ -123,5 +100,3 @@ int computerTurn(Player *player, Card *topCard, Card deck[], int *deckTop) {
     player->hand[player->handSize++] = deck[(*deckTop)++];
     return -2;
 }
-//drawCards(player); //create a draw card function 
-//^^ made it in the cards.c file - K

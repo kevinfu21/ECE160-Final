@@ -3,11 +3,6 @@
 #include <time.h>
 #include "UNO.h"
 
-/*
-- NOTE: FOR NOW, WINNING JUST SKIPS THE PLAYER, WINNER CAN STILL BE INTERACTED WITH, FIX LATER IF YOU WANT To HAVE MULTIPLE WINNER
-- 
-
-*/
 
 int main(){
     int numPlayers; //number of players
@@ -28,7 +23,7 @@ int main(){
     srand(time(NULL));
     createDeck(deck);
     shuffleDeck(deck);
-    //printDeck(deck);
+ 
 
     //prompt user for gamemode and create a pointer of players array
     prompt(&playComputers, &sevenZero);
@@ -55,8 +50,6 @@ int main(){
     if (topCard.color == 4) {
         topCard.color = rand() % 4;
     }
-    //for testing purposes
-    //printAllDecks(players, numPlayers);
 
     //ACTUAL GAME
     int returnID; //ID of card played
@@ -146,13 +139,6 @@ int main(){
             deckReset = 1;
         }
         
-        //skipping computer for now..
-        /*
-        else {
-            computerTurn(&players[currentTurn], &topCard);
-            //winner = checkWin(players[currentTurn]);
-            currentTurn++;
-        */
 
         //Proper turns
         if (currentTurn < 0) {
