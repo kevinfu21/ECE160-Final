@@ -22,9 +22,11 @@ void prompt(int *drawUntilMatch, int *sz){
             if (!(selection == 1 || selection == 2)) {
                 printf("Invalid Input! Try again: ");
             }
-        }while(!(selection == 1 || selection == 2));
+        } while(!(selection == 1 || selection == 2));
 
-        if (selection == 2) gamemodes(drawUntilMatch, sz);
+        if (selection == 2) {
+            gamemodes(drawUntilMatch, sz);
+        }
 
     } while (selection != 1);
 
