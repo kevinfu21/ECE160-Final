@@ -38,9 +38,6 @@ void test1(void);
 void test2(void);
 
 //FUNCTIONS 1 - 
-
-
-/* game setup / menu */
 void prompt(int *drawUntilMatch, int *sz);
 void gamemodes(int *drawUntilMatch, int *sz);
 int computerTurn(Player *player, Card *topCard, Card deck[], int *deckTop);

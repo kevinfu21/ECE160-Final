@@ -57,8 +57,6 @@ int userTurn(Player players[], int numPlayers, Player *player, Card *topCard){
     if (player->handSize == 0) { //skipturn if won already
         return -2;
     }
-    //ISSUE - WINNER CAN STILL BE INTERACTED WITH, THIS IS JUST A TEMP WORKAROUND
-
 
     //make sure no peeky peeky
     printf("Type 0 when you're ready: ");
@@ -103,9 +101,8 @@ void screamUNO(Player *player, Card deck[], int deckTop, int currentTurn, Player
     //make some space
     for (int i = 0; i < 50; i++){
     printf("\n");
-    }
-    //print the big boi UNO
-    UNO();
+    } 
+    UNO(); //print the big UNO
 
     printf("Player %d, %s, has one card! Scream UNO!!\n\n", currentTurn + 1, player->name);
 

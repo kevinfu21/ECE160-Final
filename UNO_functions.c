@@ -7,7 +7,7 @@ void test1() {
     printf("f1 test\n");
 }
 
-
+//start menu
 void prompt(int *drawUntilMatch, int *sz){
     int selection;
     int size;
@@ -32,7 +32,7 @@ void prompt(int *drawUntilMatch, int *sz){
     
 }
 
-//7-0 or Draw Until Match
+//option to play with bots
 void gamemodes(int *playComputers, int *sz){
     int selection;
     do {
@@ -46,9 +46,9 @@ void gamemodes(int *playComputers, int *sz){
             }
         } while (selection != 1 && selection != 3);
         
-        if (selection == 1)
+        if (selection == 1) {
             *playComputers = !(*playComputers);
-
+        }
     } while (selection != 3);
 
     printf("Exiting gamemodes... \n");
